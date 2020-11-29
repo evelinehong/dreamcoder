@@ -415,7 +415,7 @@ def enumerateForTasks(g, tasks, likelihoodModel, _=None,
             numberOfPrograms = 0
 
             for prior, _, p in g.enumeration(Context.EMPTY, [], request,
-                                             maximumDepth=99,
+                                             maximumDepth=199,
                                              upperBound=budget,
                                              lowerBound=previousBudget):
                 descriptionLength = -prior

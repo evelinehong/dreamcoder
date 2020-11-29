@@ -453,7 +453,7 @@ class Grammar(object):
 
 
     def enumeration(self,context,environment,request,upperBound,
-                    maximumDepth=20,
+                    maximumDepth=50,
                     lowerBound=0.):
         '''Enumerates all programs whose MDL satisfies: lowerBound <= MDL < upperBound'''
         if upperBound < 0 or maximumDepth == 1:
@@ -493,7 +493,7 @@ class Grammar(object):
                              # Lower bound on the description length of all of
                              # the arguments
                              lowerBound=0.,
-                             maximumDepth=20,
+                             maximumDepth=50,
                              originalFunction=None,
                              argumentIndex=0):
         if upperBound < 0. or maximumDepth == 1:
@@ -527,7 +527,7 @@ class Grammar(object):
                     yield resultL + argL, resultK, result
 
     def sketchEnumeration(self,context,environment,request,sk,upperBound,
-                           maximumDepth=20,
+                           maximumDepth=50,
                            lowerBound=0.):
         '''Enumerates all sketch instantiations whose MDL satisfies: lowerBound <= MDL < upperBound'''
         if upperBound < 0. or maximumDepth == 1:
@@ -587,7 +587,7 @@ class Grammar(object):
                           # Lower bound on the description length of all of
                           # the arguments
                           lowerBound=0.,
-                          maximumDepth=20):
+                          maximumDepth=50):
         if upperBound < 0. or maximumDepth == 1:
             return
 
@@ -1145,7 +1145,7 @@ class ContextualGrammar:
 
     def enumeration(self,context,environment,request,upperBound,
                     parent=None, parentIndex=None,
-                    maximumDepth=20,
+                    maximumDepth=50,
                     lowerBound=0.):
         '''Enumerates all programs whose MDL satisfies: lowerBound <= MDL < upperBound'''
         if upperBound < 0 or maximumDepth == 1:
@@ -1190,7 +1190,7 @@ class ContextualGrammar:
                              # Lower bound on the description length of all of
                              # the arguments
                              lowerBound=0.,
-                             maximumDepth=20,
+                             maximumDepth=50,
                              parent=None, 
                              originalFunction=None,
                              argumentIndex=0):

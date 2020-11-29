@@ -16,8 +16,32 @@ def make_list_bootstrap_tasks():
         else:
             return [l[1:]] + suffixes(l[1:])
 
-    def randomList(minValue=0, maxValue=9, len=1):
+    def randomList(minValue=0, maxValue=20, len=1):
         return [randint(minValue, maxValue) for _ in range(int(len))]
+
+    def generate_divide_examples ():
+        i = 0
+        lists = []
+        lists.append(((4,8), 0))
+        lists.append(((3,7), 0))
+        lists.append(((5,28), 0))
+        lists.append(((4,47), 0))
+        lists.append(((9,6), 1))
+        lists.append(((8,7), 1))
+        lists.append(((5,3), 1))
+        lists.append(((24,16), 1))
+        lists.append(((49,27), 1))
+        lists.append(((25,23), 1))
+        while i < 20:
+            a = randomList(len=n_sample*(1-noise))[0]
+            b = randomList(minValue=1, len=n_sample*(1-noise))[0]
+
+            if a // b >= 2 and ((a, b), _div(a,b)) not in lists:
+                lists.append(((a, b), _div(a,b)))  
+                i += 1
+        
+
+        return lists
 
     def generate_noise(n):
         return list(zip(zip(randomList(len=n), randomList(len=n)), randomList(len=n)))
@@ -42,9 +66,12 @@ def make_list_bootstrap_tasks():
         Task ("multiply", arrow(tint, tint, tint),
              generate_noise(n_sample*noise) + 
              [((a, b), _mul(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(len=n_sample*(1-noise)))]),
+        # Task ("divide", arrow(tint, tint, tint),
+        #      generate_noise(n_sample*noise) + 
+        #      [((a, b), _div(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(minValue=1, len=n_sample*(1-noise)))]),
         Task ("divide", arrow(tint, tint, tint),
              generate_noise(n_sample*noise) + 
-             [((a, b), _div(a,b)) for a, b in zip(randomList(len=n_sample*(1-noise)), randomList(minValue=1, len=n_sample*(1-noise)))]),
+             generate_divide_examples()),
     ]
 
     return operatorBootstrap

@@ -43,7 +43,7 @@ def dreamFromGrammar(g, directory, N=100):
         programs = [ p
                      for _ in range(N)
                      for p in [g.sample(arrow(turtle,turtle),
-                                        maximumDepth=20)]
+                                        maximumDepth=50)]
                      if p is not None]
     else:
         programs = g

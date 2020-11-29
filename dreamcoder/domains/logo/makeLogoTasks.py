@@ -733,7 +733,7 @@ def demoLogoTasks():
     programs = [ p
                      for _ in range(N)
                      for p in [g0.sample(arrow(turtle,turtle),
-                                         maximumDepth=20)]
+                                         maximumDepth=50)]
                      if p is not None]
     os.system("mkdir  -p /tmp/dreams_0")
     for n,p in enumerate(programs):

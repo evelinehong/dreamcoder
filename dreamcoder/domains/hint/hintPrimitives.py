@@ -8,19 +8,35 @@ from functools import reduce
 def _if(c): return lambda t: lambda f: t if c else f
 def _if0(a): return lambda b: lambda c: b if a == 0 else c
 
+def _ifneg(a): return lambda b: lambda c: b if a < 0 else c
+
 def _eq0(x): return x == 0
 # def _eq(x): return lambda y: x == y
 
 def _incr(x): return x + 1
 def _decr0(x): return max(0, x - 1)
 
-def _gt(x): return lambda y: x > y
+def _decr(x): return x - 1
+
+def _gt(x): return lambda y: x >= y
+
+def _smaller(x): return lambda y: x < y
 
 def _positive(x): return x > 0
+
+def _negative(x): return x < 0
+
+def _nonnegative(x): return x >= 0
+
+def _nonneg(x): return lambda b: lambda c: b if a >= 0 else c
+
+def _neg(x): return lambda b: lambda c: b if a < 0 else c
 
 def _add(x, y): return x + y
 
 def _minus0(x, y): return max(0, x - y)
+
+def _minus(x, y): return x - y
 
 class RecursionDepthExceeded(Exception):
     pass
@@ -69,14 +85,20 @@ def McCarthyPrimitives():
         Primitive("0", tint, 0),
         Primitive("incr", arrow(tint, tint), _incr),
         Primitive("decr0", arrow(tint, tint), _decr0),
+        # Primitive("decr", arrow(tint, tint), _decr),
         # Primitive("if", arrow(tbool, t0, t0, t0), _if),
         # Primitive("eq0", arrow(tint, tbool), _eq0),
         Primitive("if0", arrow(t0, t0, t0, t0), _if0),
         # primitiveRecursion1,
         primitiveRecursion2,
         # Primitive("gt?", arrow(tint, tint, tbool), _gt),
-        # Primitive("positive?", arrow(tint, tbool), _positive),
+        # Primitive("positive?", arrow(t0, tbool), _positive),
+        # Primitive("negative?", arrow(t0, tbool), _negative),
+        # Primitive("nonnegative?", arrow(t0, tbool), _nonnegative),
+        # Primitive("smaller", arrow(tint, tint, tbool), _smaller),
+        # Primitive("if-0", arrow(t0, t0, t0, t0), _ifneg),
         # Primitive("+", arrow(tint, tint, tint), _add),
+        # Primitive("-", arrow(tint, tint, tint), _minus),
         # Primitive("-0", arrow(tint, tint, tint), _minus0),
     ]
 

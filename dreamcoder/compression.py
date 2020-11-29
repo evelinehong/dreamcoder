@@ -84,6 +84,8 @@ def ocamlInduce(g, frontiers, _=None,
     # Memory consumption increases with the number of CPUs
     # And early on we have a lot of stuff to compress
     # If this is the first iteration, only use a fraction of the available CPUs
+    topK = 5
+    topI = 600
     if all(not p.isInvented for p in g.primitives):
         if a > 3:
             CPUs = max(1, int(CPUs / 6))

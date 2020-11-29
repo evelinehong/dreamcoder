@@ -398,9 +398,14 @@ let primitive_if = primitive "if" (tboolean @> t0 @> t0 @> t0)
 
 let primitive_decrement_tozero = primitive "decr0" (tint @> tint) (fun x -> if x = 0 then 0 else x-1);;
 let primitive_subtraction_tozero = primitive "-0" (tint @> tint @> tint) (fun x y -> if x < y then 0 else x - y);;
+
 let primitive_if_nonzero = primitive "if0" (t0 @> t0 @> t0 @> t0)
     ~manualLaziness:true
     (fun p x y -> if (Lazy.force p) = 0 then Lazy.force x else Lazy.force y);;
+
+let primitive_if_neg = primitive "if-0" (t0 @> t0 @> t0 @> t0)
+    ~manualLaziness:true
+    (fun p x y -> if (Lazy.force p) < 0 then Lazy.force x else Lazy.force y);;
 
 let primitive_is_square = primitive "is-square" (tint @> tboolean)
     (fun x ->
@@ -482,8 +487,11 @@ let primitive_not = primitive "not" (tboolean @> tboolean) (not);;
 let primitive_and = primitive "and" (tboolean @> tboolean @> tboolean) (fun x y -> x && y);;
 let primitive_nand = primitive "nand" (tboolean @> tboolean @> tboolean) (fun x y -> not (x && y));;
 let primitive_or = primitive "or" (tboolean @> tboolean @> tboolean) (fun x y -> x || y);;
-let primitive_greater_than = primitive "gt?" (tint @> tint @> tboolean) (fun (x: int) (y: int) -> x > y);;
+let primitive_greater_than = primitive "gt?" (tint @> tint @> tboolean) (fun (x: int) (y: int) -> x >= y);;
+let primitive_smaller_than = primitive "smaller" (tint @> tint @> tboolean) (fun (x: int) (y: int) -> x < y);;
 let primitive_positive = primitive "positive?" (tint @> tboolean) (fun (x: int) -> x > 0);;
+let primitive_negative = primitive "negative?" (tint @> tboolean) (fun (x: int) -> x < 0);;
+let primitive_nonnegative = primitive "nonnegative?" (tint @> tboolean) (fun (x: int) -> x >= 0);;
 
 ignore(primitive "take-word" (tcharacter @> tstring @> tstring) (fun c s ->
     List.take_while s ~f:(fun c' -> not (c = c'))));;
